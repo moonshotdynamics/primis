@@ -1,5 +1,5 @@
 'use client'
-import React, { FC, useState, useEffect, useMemo } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import OrderReview from '@/modules/compositions/OrderReview';
 import LoadingIndicator from '@/modules/components/LoadingIndicator';
 
@@ -27,7 +27,7 @@ async function getData(orderId: string): Promise<Data | null> {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        Authorization: token,
+        Authorization: 'the-key',
         'Content-Type': 'application/json',
       },
     });
@@ -65,9 +65,8 @@ const Preview: FC<Props> = ({ params }) => {
     fetchData();
   }, [params.id]);
 
-  const memoizedData = useMemo(() => data, [data]);
 
-   if (!memoizedData) {
+   if (!data) {
      return <LoadingIndicator />;
    }
 
@@ -76,9 +75,9 @@ const Preview: FC<Props> = ({ params }) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <OrderReview
-        products={memoizedData?.products}
-        productRecommendations={memoizedData?.productRecommendations}
-        deliveryCharge={memoizedData?.deliveryCharge}
+        products={data?.products}
+        productRecommendations={data?.productRecommendations}
+        deliveryCharge={data?.deliveryCharge}
       />
     </div>
   );

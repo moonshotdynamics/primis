@@ -1,7 +1,8 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import Image from 'next/image';
 import ProductCard from '@/modules/components/RecommendationCard';
 import ReviewCard from '@/modules/components/ReviewCard';
+import Modal from '@/modules/components/Modal';
 import { currencyMapper } from '@/helpers/currencyMapper';
 import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -26,6 +27,7 @@ export const OrderReview: FC<OrderReviewProps> = ({
   const swiperRef = useRef<SwiperRef>(null);
   const swiperButtonPrevRef = useRef<HTMLButtonElement>();
   const swiperButtonNextRef = useRef<HTMLButtonElement>();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
     <div>
@@ -80,6 +82,11 @@ export const OrderReview: FC<OrderReviewProps> = ({
       <h2 className="text-center text-gray-500 font-medium text-lg md:text-xl my-8">
         CUSTOMERS ALSO BOUGHT
       </h2>
+
+      <div>
+        <button onClick={() => setShowModal(true)}>Ask question</button>
+      </div>
+      {showModal && <Modal onClick={() => setShowModal} />}
 
       <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-2xl xl:max-w-4xl mx-auto">
         <button
